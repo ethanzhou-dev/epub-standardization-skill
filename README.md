@@ -1,7 +1,5 @@
 # EPUB Standardization Skill
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
 通过调用 Calibre 官方命令行工具，全自动清理、格式化并升级 EPUB 电子书的元数据与排版。
 
 ## 核心功能
