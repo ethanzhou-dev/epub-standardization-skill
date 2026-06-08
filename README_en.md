@@ -1,6 +1,6 @@
 # EPUB Standardization Skill
 
-English | [中文版](README.md)
+English | [中文](README.md)
 
 An automated AI skill that utilizes Calibre's official CLI tools to clean, format, and upgrade EPUB ebook metadata and styling.
 
