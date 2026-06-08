@@ -1,4 +1,4 @@
-# EPUB Metadata Standardization Skill
+# EPUB Standardization Skill
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -19,7 +19,7 @@
 
 ## 使用方法
 
-将本仓库中的 `SKILL.md` 内容复制并导入至你的 AI Agent（如 Gemini、Cline、Cursor）的系统提示词或技能库中即可生效。
+将本仓库中的 `SKILL.md` 内容复制并导入至你的 AI Agent 的系统提示词或技能库中即可生效。
 
 ## 内部执行逻辑
 

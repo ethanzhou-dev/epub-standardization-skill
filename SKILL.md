@@ -1,5 +1,5 @@
 ---
-name: epub-metadata-standardization
+name: epub-standardization-skill
 description: 通过提取 EPUB 内部 HTML 版权页的原始数据并辅以网络检索数据，对 EPUB 元数据进行标准化清洗与完善。
 ---
 
