@@ -71,7 +71,8 @@ ebook-meta <文件名.epub> -t "<书名>" -a "<作者A & 作者B>" --author-sort
 
 ### 阶段 5：重新打包与官方质检 (EpubCheck)
 1. **规范封包**：创建新的 `.epub` 时，`mimetype` 必须是首个被添加的文件，强制设定为 `compress_type=zipfile.ZIP_STORED`，其余文件采用 `ZIP_DEFLATED`。**【致命错误警告】**：若使用 Python `zipfile` 模块在 Windows 下打包，必须在 `arcname` 写入归档时执行 `.replace('\\', '/')` 强制使用正斜杠！EPUB 内部含有反斜杠会导致各平台均无法读取内容！
-2. **终极质检 (EpubCheck)**：打包完成后，若环境中配置了 `epubcheck.jar`，AI 需通过 `run_command` 运行 `java -jar epubcheck.jar <最终文件名>.epub`。
+2. **终极质检 (EpubCheck)**：打包完成后，必须通过 `run_command` 运行官方 W3C 检查工具：
+   - 执行命令：`java -jar d:\Users\Tzucet\Desktop\工具\epubcheck\epubcheck.jar <最终文件名>.epub`
    - **【安全红线】**：在运行 EpubCheck 并确认达到 **0 致命错误 (0 fatals) 且 0 错误 (0 errors)** 之前，**绝不允许覆盖或删除源文件**！必须将新生成的文件作为一个独立的后缀文件（如 `_fixed.epub`）进行测试，只有在质检完全通过后，才能将其重命名替换掉源文件。
 3. **排错循环**：读取 EpubCheck 输出的 W3C 标准体检报告。如果存在严重的结构错误或 HTML 闭合错误，必须使用 BeautifulSoup 或正则针对报错行数进行精确的微调修复，直至验证通过。
 4. **清理**：删除所有临时工作目录。
