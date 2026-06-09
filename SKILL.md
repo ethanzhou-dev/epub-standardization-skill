@@ -68,7 +68,6 @@ ebook-meta <文件名.epub> -t "<书名>" -a "<作者A & 作者B>" --author-sort
 - **终端截断保护**：简介内容（`-c`）中如果包含中文全角双引号 `“ ”`，极易导致 Windows 命令行截断报错。**必须将简介中所有的全角双引号替换为单引号 `' '` 或去除**。
 - **标识符**：工具底层会自动将传入的纯数字 ISBN 映射为完美的 EPUB3 `urn:isbn:` 协议格式。
 
-   - 确保图片安全响应式：`img { max-width: 100%; height: auto; }`。
 
 ### 阶段 5：重新打包与官方质检 (EpubCheck)
 1. **规范封包**：创建新的 `.epub` 时，`mimetype` 必须是首个被添加的文件，强制设定为 `compress_type=zipfile.ZIP_STORED`，其余文件采用 `ZIP_DEFLATED`。**【致命错误警告】**：若使用 Python `zipfile` 模块在 Windows 下打包，必须在 `arcname` 写入归档时执行 `.replace('\\', '/')` 强制使用正斜杠！EPUB 内部含有反斜杠会导致各平台均无法读取内容！
