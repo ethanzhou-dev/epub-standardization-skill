@@ -48,6 +48,7 @@ description: 通过提取 EPUB 内部 HTML 版权页的原始数据并辅以网�
 2. **无障碍阅读 (A11y) 声明注入**：
    - 必须遍历所有被 `ebook-polish` 重构过的 `.xhtml`/`.html` 文件。
    - 强制在每一个文件的 `<html>` 根标签中注入 `lang="zh-CN" xml:lang="zh-CN"` 属性，以满足国际视障无障碍辅助阅读标准。
+   - **【防崩溃警告】**：在注入之前，必须**先利用正则剥离所有原有的 `lang` 和 `xml:lang` 属性**！如果产生重复同名属性，会导致产生非法的 XML，从而在上传 Google Play Books 等严苛平台时直接处理失败。
 3. **精准安全的 CSS 注入**：
    - 禁止使用暴力且危险的全局 `p { text-indent: 2em; }` 污染排版。
    - 必须通过解析 HTML 找到真正的“正文段落类名”（如 `.calibre1`, `.body-text`），并在清洗后的 CSS 文件中仅对该特定 Class 注入：`text-indent: 2em; text-align: justify; margin-bottom: 0;`。
@@ -70,7 +71,7 @@ ebook-meta <文件名.epub> -t "<书名>" -a "<作者A & 作者B>" --author-sort
    - 确保图片安全响应式：`img { max-width: 100%; height: auto; }`。
 
 ### 阶段 5：重新打包与官方质检 (EpubCheck)
-1. **规范封包**：创建新的 `.epub` 时，`mimetype` 必须是首个被添加的文件，强制设定为 `compress_type=zipfile.ZIP_STORED`，其余文件采用 `ZIP_DEFLATED`。
+1. **规范封包**：创建新的 `.epub` 时，`mimetype` 必须是首个被添加的文件，强制设定为 `compress_type=zipfile.ZIP_STORED`，其余文件采用 `ZIP_DEFLATED`。**【致命错误警告】**：若使用 Python `zipfile` 模块在 Windows 下打包，必须在 `arcname` 写入归档时执行 `.replace('\\', '/')` 强制使用正斜杠！EPUB 内部含有反斜杠会导致各平台均无法读取内容！
 2. **终极质检 (EpubCheck)**：打包完成后，若环境中配置了 `epubcheck.jar`，AI 需通过 `run_command` 运行 `java -jar epubcheck.jar <最终文件名>.epub`。
 3. **排错循环**：读取 EpubCheck 输出的 W3C 标准体检报告。如果存在严重的结构错误或 HTML 闭合错误，必须使用 BeautifulSoup 针对报错行数进行精确的微调修复，直至验证通过。
 4. **清理**：删除所有临时工作目录。
