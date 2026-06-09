@@ -1,7 +1,5 @@
 # EPUB Standardization Skill
 
-[English](README_en.md) | 中文
-
 通过调用 Calibre 官方命令行工具，全自动清理、格式化并升级 EPUB 电子书的元数据与排版。
 
 ## 核心功能
