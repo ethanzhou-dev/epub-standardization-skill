@@ -43,8 +43,9 @@ description: 通过提取 EPUB 内部 HTML 版权页的原始数据并辅以网�
 
 优先利用本地环境已有的专业命令行工具（CLI）进行排版大清洗，取代脆弱的正则匹配：
 1. **清理冗余样式与重构**：使用 `run_command` 调用 Calibre 底层工具 `ebook-polish` 对 EPUB 进行一键格式标准化。
-   - `ebook-polish --remove-unused-css <文件名>`：全自动剥离所有无用垃圾代码和未引用的 CSS 样式。
-   - `ebook-polish --upgrade-book <文件名>`：将老旧的底层格式强制升级为现代标准。
+   - **【防漏重要提醒】**：`ebook-polish` 默认会生成带有 `_polished` 后缀的新文件！为了防止 AI 在后续步骤中操作未润色的原文件，**必须**在命令末尾显式指定输出文件为原文件名，进行原位覆盖覆盖！
+   - `ebook-polish --remove-unused-css <文件名> <文件名>`：全自动剥离所有无用垃圾代码和未引用的 CSS 样式。
+   - `ebook-polish --upgrade-book <文件名> <文件名>`：将老旧的底层格式强制升级为现代标准。
 2. **无障碍阅读 (A11y) 声明注入**：
    - 必须遍历所有被 `ebook-polish` 重构过的 `.xhtml`/`.html` 文件。
    - 强制在每一个文件的 `<html>` 根标签中注入 `lang="zh-CN" xml:lang="zh-CN"` 属性，以满足国际视障无障碍辅助阅读标准。
